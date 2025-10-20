@@ -6,9 +6,10 @@ This document describes how to build and install the `ta_pg` PostgreSQL extensio
 
 ### 1. Compile TA-Lib
 
-First, you need to compile the `ta-lib` C library. The following commands will do this:
-
+First, you need to clone and compile the `ta-lib` C library.
 ```bash
+git clone https://github.com/TA-Lib/ta-lib.git
+cd ta-lib/
 sh autogen.sh
 ./configure
 make
@@ -22,25 +23,25 @@ The C and SQL code for the PostgreSQL extension is generated from the `ta_func_a
 python3 scripts/generate_pg_wrappers.py
 ```
 
-This will generate the `ta_pg.c` and `ta_pg--1.0.sql` files in the `src/ta_pg` directory.
+This will generate the `ta_pg.c` and `ta_pg--1.0.sql` files in the `src/` directory.
 
 ### 3. Compile the PostgreSQL Extension
 
-To compile the PostgreSQL extension, run the following command in the `src/ta_pg` directory:
+To compile the PostgreSQL extension, run the following command:
 
 ```bash
 make ta_pg.so
 ```
 
-This will create the `ta_pg.so` shared library in the `src/ta_pg` directory.
+This will create the `ta_pg.so` shared library.
 
 ## Installing the Extension
 
 To install the extension, you need to copy the following files to your PostgreSQL installation directory (where ${PG_VERSION} is the postgresql version):
 
-*   `src/ta_pg/ta_pg.so` to the PostgreSQL library directory (e.g., `/usr/lib/postgresql/${PG_VERSION}/lib/`)
-*   `src/ta_pg/ta_pg.control` to the PostgreSQL extension directory (e.g., `/usr/share/postgresql/${PG_VERSION}/extension/`)
-*   `src/ta_pg/ta_pg--1.0.sql` to the PostgreSQL extension directory (e.g., `/usr/share/postgresql/${PG_VERSION}/extension/`)
+*   `ta_pg.so` to the PostgreSQL library directory (e.g., `/usr/lib/postgresql/${PG_VERSION}/lib/`)
+*   `src/ta_pg.control` to the PostgreSQL extension directory (e.g., `/usr/share/postgresql/${PG_VERSION}/extension/`)
+*   `src/ta_pg--1.0.sql` to the PostgreSQL extension directory (e.g., `/usr/share/postgresql/${PG_VERSION}/extension/`)
 
 Once the files are copied, you can install the extension in your database by running the following SQL command:
 
